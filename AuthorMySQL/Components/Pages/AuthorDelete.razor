@@ -1,0 +1,70 @@
+@page "/authors/delete/{id}"
+@using AuthorMySQL.Data
+@inject PubsDbContext Db
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<h3 class="mb-4">著者情報の削除</h3>
+
+@if (author == null)
+{
+    <p>著者情報が見つかりません。</p>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>⚠️ 本当にこの著者を削除しますか？</strong>
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">著者ID</dt>
+        <dd class="col-sm-9">@author.AuthorId</dd>
+
+        <dt class="col-sm-3">氏名</dt>
+        <dd class="col-sm-9">@author.AuthorFirstName @author.AuthorLastName</dd>
+
+        <dt class="col-sm-3">電話番号</dt>
+        <dd class="col-sm-9">@author.Phone</dd>
+
+        <dt class="col-sm-3">住所</dt>
+        <dd class="col-sm-9">@($"{author.Address}, {author.City}, {author.State} {author.Zip}")</dd>
+
+        <dt class="col-sm-3">契約状況</dt>
+        <dd class="col-sm-9">@(author.Contract ? "契約あり" : "契約なし")</dd>
+    </dl>
+
+    <div class="mt-4">
+        <button class="btn btn-danger me-2" @onclick="DeleteAuthor">削除する</button>
+        <button class="btn btn-secondary" @onclick="GoBack">キャンセル</button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private Author? author;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Id))
+        {
+            author = await Db.Authors.FindAsync(Id);
+        }
+    }
+
+    private async Task DeleteAuthor()
+    {
+        if (author is not null)
+        {
+            Db.Authors.Remove(author);
+            await Db.SaveChangesAsync();
+            Nav.NavigateTo("/authors");
+        }
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/authors");
+    }
+}
