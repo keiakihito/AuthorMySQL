@@ -7,7 +7,7 @@
 
 <h3>著者一覧</h3>
 
-<p><strong>全著者数:</strong> @totalCount 件</p>
+@* <p><strong>全著者数:</strong> @paginationState.TotalItemCount 件</p> *@
 
 @* Lazy loading *@
 @* Passing ProvideAuthoursAsync funtoin to ItemProvider fetches only required data *@
@@ -24,7 +24,19 @@
         <input type="checkbox" disabled checked="@context.Contract" />
         @(context.Contract ? "契約あり" : "契約なし")
     </TemplateColumn>
+    
+    @* Edit or Delete *@
+    <TemplateColumn Title="操作">
+        <NavLink class="btn btn-sm btn-outline-primary me-2" href="@($"/authors/edit/{context.AuthorId}")">
+            編集
+        </NavLink>
+        <NavLink class="btn btn-sm btn-outline-danger" href="@($"/authors/delete/{context.AuthorId}")">
+            削除
+        </NavLink>
+    </TemplateColumn>
 </QuickGrid>
+
+
 
 <Paginator State="@paginationState" />
 
@@ -38,13 +50,16 @@
     private async ValueTask<GridItemsProviderResult<Author>> ProvideAuthorsAsync(GridItemsProviderRequest<Author> request)
     {
         var query = Db.Authors.AsNoTracking(); // No tracking for speed up
-        var totalCount = await query.CountAsync();
+        totalCount = await query.CountAsync();
         
         // LINQ chain
         var items = await query
             .Skip(request.StartIndex) // page starting point
             .Take(request.Count ?? 10)// Number of data to fetch for each page
             .ToListAsync();
+        
+        //Explicitly update UI to render the field value
+        // await InvokeAsync(StateHasChanged);
 
         return new GridItemsProviderResult<Author>
         {

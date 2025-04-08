@@ -27,13 +27,9 @@ namespace AuthorMySQL
             }
 
             // ✅ ここに Create / Update / Delete をコメントインしながら試せます
-            author = db.Authors.FirstOrDefault(a => a.AuthorId == "999-99-9999");
-            if (author != null)
-            {
-                db.Authors.Remove(author);
-                db.SaveChanges();
-                Console.WriteLine("🗑️ 著者削除完了！");
-            }
+
+            // ここまで
+            
         } // end of Run
     } // end of TestQueries
 }　// end of AuthorMySQL
