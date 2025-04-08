@@ -36,7 +36,11 @@
         <label class="form-check-label">契約中</label>
     </div>
 
-    <button class="btn btn-primary" type="submit">保存</button>
+    <div class="mt-3">
+        <button class="btn btn-primary me-2" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="GoBack">キャンセル</button>
+    </div>
+    
 </EditForm>
 
 @code {
@@ -48,4 +52,10 @@
         await Db.SaveChangesAsync();
         Nav.NavigateTo("/authors");
     }
+    
+    private void GoBack()
+    {
+        Nav.NavigateTo("/authors");
+    }
+
 }

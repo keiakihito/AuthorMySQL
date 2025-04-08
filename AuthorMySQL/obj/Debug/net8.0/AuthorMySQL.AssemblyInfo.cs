@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuthorMySQL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82a0b36c60b2a0c467f6755266b8082455c2700a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98797b82a389fa26812cacb7dc7224d22c146772")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuthorMySQL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuthorMySQL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

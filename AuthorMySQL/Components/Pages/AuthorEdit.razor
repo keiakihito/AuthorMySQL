@@ -1,0 +1,105 @@
+@page "/authors/edit/{id}"
+@using AuthorMySQL.Data
+@using Microsoft.EntityFrameworkCore
+@inject PubsDbContext Db
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<h3>著者情報の編集</h3>
+
+@if (author == null)
+{
+    <p>読み込み中または該当する著者が見つかりません。</p>
+}
+else
+{
+    <EditForm Model="@author" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label>著者ID</label>
+            <InputText class="form-control" @bind-Value="author.AuthorId" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>姓 <span class="text-danger">*</span></label>
+            <InputText class="form-control" @bind-Value="author.AuthorLastName" />
+            <ValidationMessage For="@(() => author.AuthorLastName)" />
+        </div>
+
+        <div class="form-group">
+            <label>名 <span class="text-danger">*</span></label>
+            <InputText class="form-control" @bind-Value="author.AuthorFirstName" />
+            <ValidationMessage For="@(() => author.AuthorFirstName)" />
+        </div>
+
+        <div class="form-group">
+            <label>電話番号 <span class="text-danger">*</span></label>
+            <InputText class="form-control" @bind-Value="author.Phone" />
+            <ValidationMessage For="@(() => author.Phone)" />
+        </div>
+
+
+        <div class="form-group">
+            <label>住所</label>
+            <InputText class="form-control" @bind-Value="author.Address" />
+        </div>
+
+        <div class="form-group">
+            <label>市町村</label>
+            <InputText class="form-control" @bind-Value="author.City" />
+        </div>
+
+        <div class="form-group">
+            <label>州</label>
+            <InputText class="form-control" @bind-Value="author.State" />
+        </div>
+
+        <div class="form-group">
+            <label>郵便番号</label>
+            <InputText class="form-control" @bind-Value="author.Zip" />
+        </div>
+
+        <div class="form-group">
+            <label>契約中</label>
+            <InputCheckbox class="form-check-input" @bind-Value="author.Contract" />
+        </div>
+
+        <div class="mt-3">
+            <button class="btn btn-primary me-2" type="submit">保存</button>
+            <button class="btn btn-secondary" type="button" @onclick="GoBack">キャンセル</button>
+        </div>
+
+    </EditForm>
+}
+
+
+@code {
+    [Parameter]
+    public string id { get; set; } = string.Empty;
+
+    private Author? author;
+
+    protected override async Task OnInitializedAsync()
+    {
+        author = await Db.Authors.FirstOrDefaultAsync(a => a.AuthorId == id);
+
+        if (author == null)
+        {
+            Nav.NavigateTo("/authors"); // データが見つからなければ戻す
+        }
+    }
+    
+    private void GoBack()
+    {
+        Nav.NavigateTo("/authors");
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        Db.Authors.Update(author!);
+        await Db.SaveChangesAsync();
+        Nav.NavigateTo("/authors");
+    }
+}
