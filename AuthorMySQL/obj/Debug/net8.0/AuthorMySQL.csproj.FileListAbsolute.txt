@@ -214,3 +214,4 @@
 /src/AuthorMySQL/obj/Debug/net8.0/scopedcss/Components/Pages/AuthorsGrid.razor.rz.scp.css
 /src/AuthorMySQL/obj/Debug/net8.0/AuthorMySQL.sourcelink.json
 /Users/keita-katsumi/Dropbox/Programing/GitHub/C#/AuthorMySQL/AuthorMySQL/obj/Debug/net8.0/AuthorMySQL.sourcelink.json
+/Users/keita-katsumi/Dropbox/Programing/GitHub/C#/AuthorMySQL/AuthorMySQL/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll

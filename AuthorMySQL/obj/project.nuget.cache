@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Q2Fun6FzpOg=",
+  "dgSpecHash": "Kn7bb81ebPI=",
   "success": true,
   "projectFilePath": "/Users/keita-katsumi/Dropbox/Programing/GitHub/C#/AuthorMySQL/AuthorMySQL/AuthorMySQL.csproj",
   "expectedPackageFiles": [
@@ -23,6 +23,7 @@
     "/Users/keita-katsumi/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.0/microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "/Users/keita-katsumi/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.0/microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
     "/Users/keita-katsumi/.nuget/packages/microsoft.entityframeworkcore.design/8.0.0/microsoft.entityframeworkcore.design.8.0.0.nupkg.sha512",
+    "/Users/keita-katsumi/.nuget/packages/microsoft.entityframeworkcore.inmemory/8.0.0/microsoft.entityframeworkcore.inmemory.8.0.0.nupkg.sha512",
     "/Users/keita-katsumi/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.0/microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512",
     "/Users/keita-katsumi/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/keita-katsumi/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
