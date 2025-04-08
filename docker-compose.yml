@@ -1,0 +1,31 @@
+﻿version: '3.8'
+services:
+  app:
+    build:
+      context: .                 
+      dockerfile: AuthorMySQL/Dockerfile.dev
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/src                  
+    depends_on:
+      - mysql
+    working_dir: /src/AuthorMySQL
+    command: dotnet watch run --project AuthorMySQL.csproj
+    environment:
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings__DefaultConnection: "server=mysql;port=3306;database=dotnet_practice_db;user=root;password=password"
+
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

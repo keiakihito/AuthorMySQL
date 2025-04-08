@@ -1,0 +1,56 @@
+@page "/authors"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using AuthorMySQL.Data
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<h3>著者一覧</h3>
+
+<p><strong>全著者数:</strong> @totalCount 件</p>
+
+@* Lazy loading *@
+@* Passing ProvideAuthoursAsync funtoin to ItemProvider fetches only required data *@
+<QuickGrid TGridItem="Author"
+           ItemsProvider="@ProvideAuthorsAsync"
+           Pagination="@paginationState">
+    <PropertyColumn Property="@(a => a.AuthorId)" Title="著者ID" />
+    <TemplateColumn Title="著者名">
+        @(context.AuthorFirstName) @(context.AuthorLastName)
+    </TemplateColumn>
+    <PropertyColumn Property="@(a => a.Phone)" Title="電話番号" />
+    <PropertyColumn Property="@(a => a.State)" Title="州" />
+    <TemplateColumn Title="契約有無">
+        <input type="checkbox" disabled checked="@context.Contract" />
+        @(context.Contract ? "契約あり" : "契約なし")
+    </TemplateColumn>
+</QuickGrid>
+
+<Paginator State="@paginationState" />
+
+@code {
+    private readonly PaginationState paginationState = new() { ItemsPerPage = 10 };
+    private int totalCount;
+
+    [Inject]
+    private PubsDbContext Db { get; set; } = default!;
+
+    private async ValueTask<GridItemsProviderResult<Author>> ProvideAuthorsAsync(GridItemsProviderRequest<Author> request)
+    {
+        var query = Db.Authors.AsNoTracking(); // No tracking for speed up
+        var totalCount = await query.CountAsync();
+        
+        // LINQ chain
+        var items = await query
+            .Skip(request.StartIndex) // page starting point
+            .Take(request.Count ?? 10)// Number of data to fetch for each page
+            .ToListAsync();
+
+        return new GridItemsProviderResult<Author>
+        {
+            Items = items,
+            TotalItemCount = totalCount
+        };
+    }
+
+}
